@@ -112,7 +112,7 @@ try:
 
 	st.write(description)
 	with st.expander("Visualizza le notizie e il loro sentimento"):
-        st.table(parsed_and_scored_news)
+		st.table(parsed_and_scored_news)
 	
 except:
 	st.write("Inserisci un codice di borsa corretto, ad esempio 'AAPL' sopra e premi Invio.")	
