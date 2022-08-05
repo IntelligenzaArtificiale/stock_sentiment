@@ -90,13 +90,13 @@ def plot_daily_sentiment(parsed_and_scored_news, ticker):
 # for extracting data from finviz
 finviz_url = 'https://finviz.com/quote.ashx?t='
 
-st.set_page_config(page_title = "Bohmian's Stock News Sentiment Analyzer", layout = "wide")
-st.header("Bohmian's Stock News Sentiment Analyzer")
+st.set_page_config(page_title = "Analizza il sentimento delle notizie sulle aziende quotate in borsa", layout = "wide")
+st.header("Analizza il sentimento delle notizie sulle aziende quotate in borsa")
 
-ticker = st.text_input('Enter Stock Ticker', '').upper()
+ticker = st.text_input('Inserisci il TICKET ', '').upper()
 
 try:
-	st.subheader("Hourly and Daily Sentiment of {} Stock".format(ticker))
+	st.subheader("Sentimento sull'Azione {} Per ore e giorni".format(ticker))
 	news_table = get_news(ticker)
 	parsed_news_df = parse_news(news_table)
 	parsed_and_scored_news = score_news(parsed_news_df)
@@ -106,18 +106,16 @@ try:
 	st.plotly_chart(fig_hourly)
 	st.plotly_chart(fig_daily)
 
-	description = """
-		The above chart averages the sentiment scores of {} stock hourly and daily.
-		The table below gives each of the most recent headlines of the stock and the negative, neutral, positive and an aggregated sentiment score.
-		The news headlines are obtained from the FinViz website.
-		Sentiments are given by the nltk.sentiment.vader Python library.
-		""".format(ticker)
-		
-	st.write(description)	 
-	st.table(parsed_and_scored_news)
+	description = """Il grafico sopra mostra la media dei punteggi del sentiment sulle notizie per ogni ora e ogni giorno.
+    La tabella seguente fornisce ciascuno dei titoli più recenti del titolo e il punteggio del sentiment negativo, neutro, positivo e aggregato.
+    I titoli delle notizie sono ottenuti dal sito Web di FinViz.com."""
+
+	st.write(description)
+	with st.expander("Visualizza le notizie e il loro sentimento"):
+        st.table(parsed_and_scored_news)
 	
 except:
-	st.write("Enter a correct stock ticker, e.g. 'AAPL' above and hit Enter.")	
+	st.write("Inserisci un codice di borsa corretto, ad esempio 'AAPL' sopra e premi Invio.")	
 
 hide_streamlit_style = """
 <style>
